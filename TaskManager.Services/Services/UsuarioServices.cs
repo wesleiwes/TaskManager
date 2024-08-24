@@ -12,11 +12,15 @@ public class UsuarioServices(IUsuarioRepositorio usuarioRepositorio) : IUsuarioS
 
     public async Task<UsuarioDto> AtualizeUsuario(UsuarioDto usuarioDto)
     {
-        Usuario? usuario = await _usuarioRepositorio.ObterPorId(usuarioDto.IdUsuario);
+        Usuario? usuario = await _usuarioRepositorio.ObterPorId(usuarioDto.IdUsuario) ?? throw new Exception("Usuário não encontrado");
 
-        return usuario == null ?
-            throw new Exception("Usuario não encontrado") :
-            MapeadorDeEntidades.ConvertaUsuarioParaDto(usuario);
+        usuario.NomeCompleto = usuarioDto.NomeCompleto;
+        usuario.Email = usuarioDto.Email;
+        usuario.Login = usuarioDto.Login;
+      
+        await _usuarioRepositorio.Atualizar(usuario);
+
+        return MapeadorDeEntidades.ConvertaUsuarioParaDto(usuario);
     }
 
     public async Task<UsuarioDto> CrieUsuario(UsuarioDto usuarioDto)
