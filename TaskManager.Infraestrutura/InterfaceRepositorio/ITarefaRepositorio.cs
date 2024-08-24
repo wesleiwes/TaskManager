@@ -3,7 +3,7 @@ using TaskManager.Domain.Enuns;
 
 namespace TaskManager.Infraestrutura.Interface;
 
-public interface ITarefaRepositorio
+public interface ITarefaRepositorio 
 {
     Task<Tarefa?> ObterPorId(int id);
     Task<Tarefa> CrieTarefa(Tarefa tarefa);

@@ -21,6 +21,6 @@ public class Usuario
     [MaxLength(50)]
     public string NomeCompleto { get; set; }
 
-    public ICollection<Tarefa> Tarefas { get; set; } = [];
+    public IEnumerable<Tarefa> Tarefas { get; set; } = [];
 }
 

@@ -8,16 +8,18 @@ public class UsuarioRepositorio(AppDbContext context) : IUsuarioRepositorio
 {
     private readonly AppDbContext _context = context;
 
-    public async Task Adicionar(Usuario usuario)
+    public async Task<Usuario> Adicionar(Usuario usuario)
     {
         _context.Add(usuario);
         await _context.SaveChangesAsync();
+        return usuario;
     }
 
-    public async Task Atualizar(Usuario usuario)
+    public async Task<Usuario> Atualizar(Usuario usuario)
     {
         _context.Update(usuario);
         await _context.SaveChangesAsync();
+        return usuario;
     }
 
     public async Task<Usuario?> ObterPorId(int id) =>
@@ -26,7 +28,7 @@ public class UsuarioRepositorio(AppDbContext context) : IUsuarioRepositorio
     public async Task<IEnumerable<Usuario>> ObterTodos() =>
         await _context.Usuarios.ToListAsync();
 
-    public async Task Remover(int id)
+    public async Task<bool> Remover(int id)
     {
         Usuario? usuario = await ObterPorId(id);
 
@@ -35,6 +37,7 @@ public class UsuarioRepositorio(AppDbContext context) : IUsuarioRepositorio
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
         }
+        return true;
     }
 }
 
